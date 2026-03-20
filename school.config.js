@@ -7,15 +7,15 @@
 const SCHOOL_CONFIG = {
 
   // ── SCHOOL IDENTITY ────────────────────────────────────────
-  name:         "EduMatrix School",       // Full school name
-  short_name:   "EduMatrix",              // Short name for app icon
+  name:         "OSWA SCIENCE SCHOOL",       // Full school name
+  short_name:   "OSWA-SCIENCE",              // Short name for app icon
   tagline:      "School Management System", // Shown under logo
   city:         "Faisalabad",             // City name
-  session:      "2025-26",               // Current academic session
+  session:      "2026-27",               // Current academic session
 
   // ── CONTACT ────────────────────────────────────────────────
-  phone:        "0300-0000000",           // School phone
-  whatsapp:     "0300-0000000",           // WhatsApp number
+  phone:        "03189669178",           // School phone
+  whatsapp:     "0318-9669178",           // WhatsApp number
   email:        "info@school.com",        // School email
   address:      "Faisalabad, Pakistan",   // Full address
 
@@ -28,9 +28,9 @@ const SCHOOL_CONFIG = {
 
   // ── SUPABASE DATABASE ──────────────────────────────────────
   // Get from supabase.com → your project → Settings → API
-  supabase_url: "https://mimpmsykusjgvwzeciau.supabase.co",
-  supabase_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pbXBtc3lrdXNqZ3Z3emVjaWF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3MjIyMTcsImV4cCI6MjA4OTI5ODIxN30._AK9YtdOMGZuOJkufOHNpWG2JG_0dh8b_chPk4dbMKc",
-  school_id:    "00000000-0000-0000-0000-000000000001",
+  supabase_url: "https://vjgshplfxwyrzhamrrde.supabase.co",
+  supabase_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqZ3NocGxmeHd5cnpoYW1ycmRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5ODMxNDAsImV4cCI6MjA4OTU1OTE0MH0.w36AYeFFXrZvQFV3a_H3RyQCOEGRy4hcgWINDmMxe34",
+  school_id:    "vjgshplfxwyrzhamrrde",
 
   // ── PUSH NOTIFICATIONS ─────────────────────────────────────
   // These are shared across all schools (Zyveron's keys)
