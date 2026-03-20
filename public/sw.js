@@ -34,7 +34,7 @@ self.addEventListener('fetch', e => {
 self.addEventListener('push', e => {
   const data = e.data ? e.data.json() : {};
 
-  const title = data.title || 'EduMatrix School';
+  const title = data.title || 'Oswa Science School';
   const body  = data.body  || 'You have a new notification';
 
   const options = {
@@ -42,7 +42,7 @@ self.addEventListener('push', e => {
     icon:    '/icons/icon-192.png',
     badge:   '/icons/icon-192.png',
     vibrate: [300, 100, 300],
-    tag:     'edumatrix-notif',
+    tag:     'oswa sci-notif',
     renotify: true,
     data:    { url: data.url || '/' },
     actions: [
@@ -62,7 +62,7 @@ self.addEventListener('notificationclick', e => {
   e.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
       for (const c of list) {
-        if (c.url.includes('edumatrix') && 'focus' in c) return c.focus();
+        if (c.url.includes('Oswa Science School') && 'focus' in c) return c.focus();
       }
       if (clients.openWindow) return clients.openWindow(url);
     })
