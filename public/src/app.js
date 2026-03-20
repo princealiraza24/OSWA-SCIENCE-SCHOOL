@@ -654,7 +654,7 @@ async function secFees(c){
   await rFees();
 }
 const receiptHtml=(name,due,paid,month)=>`<div class="receipt" id="print-area">
-  <div class="receipt-head"><h2>EduMatrix School</h2><p>Fee Receipt — ${month}</p></div>
+  <div class="receipt-head"><h2>OSWA SCIENCE SCHOOL</h2><p>Fee Receipt — ${month}</p></div>
   <div class="rr"><span class="rl">Student</span><span>${name}</span></div>
   <div class="rr"><span class="rl">Month</span><span>${month}</span></div>
   <div class="rr"><span class="rl">Fee Due</span><span>Rs ${fmt(due)}</span></div>
@@ -2067,7 +2067,7 @@ async function secNotifications(c) {
     if (Notification.permission === 'granted') {
       const res = await POST('/push/test', {
         user_id: CU.id,
-        title: '🔔 EduMatrix Alert',
+        title: '🔔 OSWA SCIENCE Alert',
         body: 'Notifications are working! You will be notified when your child is absent.'
       });
       if (res?.ok !== false) toast('Test notification sent to your phone!', 'ok');
