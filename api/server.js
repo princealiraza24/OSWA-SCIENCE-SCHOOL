@@ -12,7 +12,7 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY
 );
 
-const SCHOOL_ID = '00000000-0000-0000-0000-000000000001';
+const SCHOOL_ID = 'e3403311-4f78-46df-a44c-0cc0e310a0fa';
 
 webpush.setVapidDetails(
   'mailto:admin@edumatrix.pk',
