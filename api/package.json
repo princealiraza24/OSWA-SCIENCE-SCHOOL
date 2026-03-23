@@ -1,7 +1,7 @@
 {
   "name": "edumatrix-api",
   "version": "1.0.0",
-  "description": "EduMatrix School Management API by Zyveron Technologies",
+  "description": "OSWA SCIENCE SCHOOL Management API by Zyveron Technologies",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
