@@ -30,7 +30,7 @@ const SCHOOL_CONFIG = {
   // Get from supabase.com → your project → Settings → API
   supabase_url: "https://vjgshplfxwyrzhamrrde.supabase.co",
   supabase_key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqZ3NocGxmeHd5cnpoYW1ycmRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5ODMxNDAsImV4cCI6MjA4OTU1OTE0MH0.w36AYeFFXrZvQFV3a_H3RyQCOEGRy4hcgWINDmMxe34",
-  school_id:    "00000000-0000-0000-0000-000000000001",
+  school_id:    "e3403311-4f78-46df-a44c-0cc0e310a0fa",
 
   // ── PUSH NOTIFICATIONS ─────────────────────────────────────
   // These are shared across all schools (Zyveron's keys)
