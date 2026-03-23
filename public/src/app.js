@@ -6,7 +6,7 @@ let CLS = [];
 let NOTIFS = [];
 
 // ── VAPID PUBLIC KEY ───────────────────────────────────────────────────────
-const VAPID_PUBLIC_KEY = 'BKNbHEw95d4wgaP4m0njpXbPcGRrFC7Wy5aEV4s_XrwGA0gQOr0rJUcoHNLA_NwD0y-i9vUNspPWoPv6etOcj6c';
+const VAPID_PUBLIC_KEY = 'BDt7dBtU0ajMBY5F-TpH5ZwSRTG8nJFhxWaCtMa2swYBeqtGb5w8HmbcZ2WMWdowvNIUQ_jQ2-36M7hctEpjJeI';
 
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
