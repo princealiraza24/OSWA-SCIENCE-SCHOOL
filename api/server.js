@@ -78,7 +78,7 @@ app.delete('/api/students/:id', async (req, res) => {
 
 app.get('/api/students/:id', async (req, res) => {
   const { data } = await supabase.from('students').select('*')
-    .eq('id', req.params.id).single();
+    .eq('id', req.params.id).eq('school_id', SCHOOL_ID).single();
   res.json(data || null);
 });
 
@@ -118,19 +118,30 @@ app.post('/api/attendance', async (req, res) => {
   const { error } = await supabase.from('attendance')
     .upsert(upserts, { onConflict: 'school_id,student_id,date' });
 
+  // Process absent students
   const absent = records.filter(r => r.status === 'Absent');
+  console.log(`Total absent students: ${absent.length}`);
+
   for (const a of absent) {
-    const { data: stu } = await supabase.from('students')
+    // ✅ FIXED: Added school_id filter to student query
+    const { data: stu, error: stuError } = await supabase.from('students')
       .select('name, parent_contact, parent_user_id, callmebot_key')
-      .eq('id', a.student_id).single();
+      .eq('id', a.student_id)
+      .eq('school_id', SCHOOL_ID)
+      .single();
+
+    console.log(`Student fetch: ${stu?.name || 'NOT FOUND'}, error: ${stuError?.message || 'none'}`);
+    console.log(`parent_user_id: ${stu?.parent_user_id || 'NULL'}`);
+
     if (stu) {
-      // Send SMS
+      // Send SMS log
       if (stu.parent_contact) {
         await sendSMS(stu.parent_contact,
           `Dear Parent, your child ${stu.name} was ABSENT on ${date}. - EduMatrix School`);
       }
       // Send Push Notification
       if (stu.parent_user_id) {
+        console.log(`Sending push to parent: ${stu.parent_user_id}`);
         await sendPushToUser(
           stu.parent_user_id,
           `🔴 Absence Alert — ${stu.name}`,
@@ -226,7 +237,7 @@ app.post('/api/announcements', async (req, res) => {
     .insert({ ...req.body, school_id: SCHOOL_ID }).select().single();
   if (!error && data) {
     await sendPushToRole('student', '📢 School Notice — ' + data.title, data.body || 'Tap to view in OSWA-SCIENCE app.');
-    await sendPushToRole('parent',  '📢 School Notice — ' + data.title, data.body || 'Tap to view in OSWA-SCIENCEapp.');
+    await sendPushToRole('parent',  '📢 School Notice — ' + data.title, data.body || 'Tap to view in OSWA-SCIENCE app.');
     await sendPushToRole('teacher', '📢 New Announcement — ' + data.title, data.body || 'Tap to view in OSWA-SCIENCE app.');
   }
   res.json(error ? { ok: false } : { ok: true, data });
@@ -440,7 +451,10 @@ async function sendPushToUser(user_id, title, body, url='/') {
   try {
     const { data } = await supabase.from('push_subscriptions')
       .select('subscription').eq('user_id', user_id).single();
-    if (!data) return;
+    if (!data) {
+      console.log('No push subscription found for user:', user_id);
+      return;
+    }
     const sub = JSON.parse(data.subscription);
     await webpush.sendNotification(sub, JSON.stringify({ title, body, url }));
     console.log('Push sent to user:', user_id);
@@ -478,19 +492,14 @@ async function sendWhatsApp(phone, apikey, message) {
     const response = await fetch(url);
     const text = await response.text();
     console.log('WhatsApp sent to:', phone, '| Response:', text);
-  } catch(e) {
-    console.error('WhatsApp error:', e.message);
-  }
+  } catch(e) { console.error('WhatsApp error:', e.message); }
 }
 
-// WhatsApp test route
 app.post('/api/whatsapp/test', async (req, res) => {
   const { phone, apikey } = req.body;
   if (!phone || !apikey) return res.json({ ok: false, error: 'Phone and API key required' });
-  await sendWhatsApp(
-    phone,
-    apikey,
-    `✅ Test Message!\n\nWhatsApp alerts are working for EduMatrix School.\nPowered by Zyveron Technologies.`
+  await sendWhatsApp(phone, apikey,
+    `✅ Test Message!\n\nWhatsApp alerts are working for OSWA Science School.\nPowered by Zyveron Technologies.`
   );
   res.json({ ok: true });
 });
