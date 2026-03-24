@@ -7,9 +7,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Regular Supabase client (uses anon key, may be restricted by RLS)
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
+);
+
+// Admin Supabase client (uses service role key, bypasses RLS)
+const supabaseAdmin = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 const SCHOOL_ID = 'e3403311-4f78-46df-a44c-0cc0e310a0fa';
@@ -65,6 +72,9 @@ app.post('/api/students', async (req, res) => {
 });
 
 app.put('/api/students/:id', async (req, res) => {
+  // ✅ ADD LOGGING to see what data is being received
+  console.log('PUT /students/:id', req.params.id, 'body:', req.body);
+
   const { error } = await supabase.from('students').update(req.body)
     .eq('id', req.params.id).eq('school_id', SCHOOL_ID);
   res.json(error ? { ok: false, error: error.message } : { ok: true });
@@ -123,8 +133,8 @@ app.post('/api/attendance', async (req, res) => {
   console.log(`Total absent students: ${absent.length}`);
 
   for (const a of absent) {
-    // ✅ FIXED: Added school_id filter to student query
-    const { data: stu, error: stuError } = await supabase.from('students')
+    // ✅ USE supabaseAdmin to fetch student details (bypass RLS)
+    const { data: stu, error: stuError } = await supabaseAdmin.from('students')
       .select('name, parent_contact, parent_user_id, callmebot_key')
       .eq('id', a.student_id)
       .eq('school_id', SCHOOL_ID)
